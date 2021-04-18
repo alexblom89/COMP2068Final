@@ -8,8 +8,11 @@ const mongoose = require('mongoose');
 // attribute will except a document ID as its value.
 // This will create an association between a song and
 // an artist
-const SongSchema = ({
-  artist: {},
+const SongSchema = new mongoose.Schema({
+  artist: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Artist'
+  },
   title: {
     type: String,
     required: true

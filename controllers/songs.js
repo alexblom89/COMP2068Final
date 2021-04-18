@@ -2,15 +2,17 @@
 
 // Step 1 (10 points): Require the correct model.
 // NOTE: Watch your letter case! The below code makes assumptions.
+const Song = require('../models/song');
 
 // Step 2 (50 points total):
 exports.index = async (request, response, next) => {
   try {
     // a) (30 points): Correct the following line to fetch all the songs
     // (with the artist populated in the set).
-    const songs = [];
+    const songs = await Song.find().populate('artist');
 
     response.status(200).json(songs);
+
   } catch (error) {
     next(error);
   }
@@ -23,9 +25,10 @@ exports.show = async (request, response, next) => {
 
     // a) (20 points): Fetch the requested song, with the artist populated
     // as part of the returned value
-    const song = null;
+    const song = await Song.findById(id).populate('artist');
 
     response.status(200).json(song);
+
   } catch (error) {
     next(error);
   }
@@ -36,7 +39,7 @@ exports.show = async (request, response, next) => {
   Correct the following 3 actions.
 */
 // Step 4 (20 points total):
-exports.create = (request, response, next) => {
+exports.create = async (request, response, next) => {
   try {
     const {
       title,
@@ -46,7 +49,7 @@ exports.create = (request, response, next) => {
       artist
     } = request.body;
 
-    const song = Song.create({
+    const song = await Song.create({
       title,
       length,
       year,
@@ -59,13 +62,14 @@ exports.create = (request, response, next) => {
       status: "success",
       song
     });
+
   } catch (error) {
     next(error);
   }
 }; // c) (20 points): Endpoint works
 
 // Step 5 (20 points total):
-exports.update = (request, response, next) => {
+exports.update = async (request, response, next) => {
   try {
     const {
       id,
@@ -76,7 +80,7 @@ exports.update = (request, response, next) => {
       artist
     } = request.body;
 
-    Song.findOneAndUpdate({ _id: id }, {
+    await Song.findOneAndUpdate({ _id: id }, {
       id,
       title,
       length,
@@ -85,7 +89,7 @@ exports.update = (request, response, next) => {
       artist
     });
 
-    const song = Song.findById(id);
+    const song = await Song.findById(id);
 
     response.status(200).json({
       message: "Song was updated successfully",
@@ -98,11 +102,11 @@ exports.update = (request, response, next) => {
 }; // c) (20 points): Endpoint works
 
 // Step 6 (20 points total):
-exports.destroy = (request, response, next) => {
+exports.destroy = async (request, response, next) => {
   try {
     const { id } = request.body;
 
-    Song.findOneAndDelete({ _id: id });
+    await Song.findOneAndDelete({ _id: id });
 
     response.status(200).json({
       message: "Song was deleted successfully",
