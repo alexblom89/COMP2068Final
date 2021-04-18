@@ -26,7 +26,7 @@ exports.show = async (request, response, next) => {
 
     // !!! BONUS (10 points): Get all the songs for this artist
     // NOTE: Requires the model method to get the marks
-    const songs = await artist.getBooks();
+    const songs = await artist.getSongs();
 
     // b) (10 points): Respond with the artist
     // !!! BONUS (10 points): Respond with the artist AND the songs

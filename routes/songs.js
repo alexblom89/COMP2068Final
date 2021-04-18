@@ -9,9 +9,9 @@ const { index, show, create, update, destroy } = require('../controllers/songs')
 module.exports = router => {
   router.get("/songs", index);
   router.get("/songs/:id", show);
-  router.post("/artists", create);
-  router.put("/artists", update);
-  router.delete("/artists", destroy);
-  
+  router.post("/songs", create);
+  router.put("/songs", update);
+  router.delete("/songs", destroy);
+
   return router;
 };
